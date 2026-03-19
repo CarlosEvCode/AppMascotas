@@ -132,6 +132,12 @@ public class ListarCustom extends AppCompatActivity implements MascotaAdapter.On
 
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();// Cada vez que regresamos a esta pantalla, refrescamos los datos
+        obtenerDatos();
+    }
+
     private void eliminarMascota(int id, int position){
         String urlEliminar = this.URL + String.valueOf(id);
         requestQueue = Volley.newRequestQueue(this);

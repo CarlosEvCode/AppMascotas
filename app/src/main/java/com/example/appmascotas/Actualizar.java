@@ -28,7 +28,7 @@ public class Actualizar extends AppCompatActivity {
 
 
     EditText resID, edtATipo, edtANombre, edtAColor, edtAPeso;
-    Button btnActualizar;
+    Button btnActualizar,btnVolver;
     RequestQueue requestQueue;
 
     private final String URL = "http://192.168.18.61:3000/mascotas/";
@@ -39,6 +39,7 @@ public class Actualizar extends AppCompatActivity {
         edtAColor = findViewById(R.id.edtAColor);
         edtAPeso = findViewById(R.id.edtAPeso);
         btnActualizar = findViewById(R.id.btnActualizar);
+        btnVolver = findViewById(R.id.btnVolver);
     }
 
     @Override
@@ -61,6 +62,9 @@ public class Actualizar extends AppCompatActivity {
         loadUI();
         btnActualizar.setOnClickListener(v -> {
             validarRegistro();
+        });
+        btnVolver.setOnClickListener(v -> {
+            finish(); // Cierra la actividad actual y vuelve a la anterior
         });
         if (idRecibido > 0) {
             resID.setText(String.valueOf(idRecibido));
