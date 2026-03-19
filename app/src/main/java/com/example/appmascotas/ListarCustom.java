@@ -1,5 +1,6 @@
 package com.example.appmascotas;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -17,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
@@ -32,7 +34,7 @@ public class ListarCustom extends AppCompatActivity implements MascotaAdapter.On
     RequestQueue requestQueue;
     Button btnEditar, btnEliminar;
 
-    private final String URL = "http://192.168.101.34:3000/mascotas/";
+    private final String URL = "http://192.168.18.61:3000/mascotas/";
     private void loadUI(){
         recyclerMascotas = findViewById(R.id.recyclerMascotas);
         btnEditar = findViewById(R.id.btnEditar);
@@ -51,7 +53,6 @@ public class ListarCustom extends AppCompatActivity implements MascotaAdapter.On
 
         loadUI();
 
-        /*btnEditar.setOnClickListener((v) -> {startActivity(new Intent(getApplicationContext(), Actualizar.class));});*/
 
         //Preparar lista y adapter antes de utilizar WS
         listaMascotas = new ArrayList<>();
@@ -105,7 +106,7 @@ public class ListarCustom extends AppCompatActivity implements MascotaAdapter.On
     }
 
     @Override
-    public void onEditar(int posision, Mascota mascota) {
+    public void onEditar(int position, Mascota mascota) {
         //En que registro se puso clic?
         Intent envioDatos = new Intent(this, Actualizar.class);
         envioDatos.putExtra("idEnviado", mascota.getId()); //Enviando la id del objeto mascota
@@ -118,7 +119,46 @@ public class ListarCustom extends AppCompatActivity implements MascotaAdapter.On
     }
 
     @Override
-    public void onEliminar(int posision, Mascota mascota) {
+    public void onEliminar(int position, Mascota mascota) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Mascotas");
+        builder.setMessage("¿Seguro de eliminar?");
+        builder.setPositiveButton("Si",(a,b) ->{
+            eliminarMascota(mascota.getId(),position);
+        });
+        builder.setNegativeButton("No", null);
+        AlertDialog dialog = builder.create();
+        dialog.show();
+
+    }
+
+    private void eliminarMascota(int id, int position){
+        String urlEliminar = this.URL + String.valueOf(id);
+        requestQueue = Volley.newRequestQueue(this);
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
+                Request.Method.DELETE,
+                urlEliminar,
+                null,
+                jsonObject -> {
+                    try {
+                        boolean eliminado = jsonObject.getBoolean("success");
+                        String mensaje = jsonObject.getString("message");
+                        if (eliminado){
+                            adapter.eliminarItem(position);
+                            Toast.makeText(this,mensaje,Toast.LENGTH_SHORT).show();
+                        }
+                    } catch (JSONException e) {
+                        Log.e("ErrorJSON",e.toString());
+                    }
+                },
+                error -> {
+                    Log.e("ErrorWS",error.toString());
+                    Toast.makeText(this,"No se pudo eliminar",Toast.LENGTH_SHORT).show();
+
+                }
+        );
+        requestQueue.add(jsonObjectRequest);
 
     }
 }

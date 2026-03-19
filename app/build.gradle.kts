@@ -9,7 +9,6 @@ android {
             minorApiLevel = 1
         }
     }
-
     defaultConfig {
         applicationId = "com.example.appmascotas"
         minSdk = 30

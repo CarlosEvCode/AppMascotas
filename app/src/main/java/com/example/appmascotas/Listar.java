@@ -31,7 +31,7 @@ public class Listar extends AppCompatActivity {
     RequestQueue requestQueue;
 
     //URL
-    private final String URL = "http://192.168.101.34:3000/mascotas";
+    private final String URL = "http://192.168.18.61:3000/mascotas/";
 
     private void loadUI(){
         lstMascotas = findViewById(R.id.lstMascotas);

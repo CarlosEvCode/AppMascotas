@@ -31,7 +31,7 @@ public class Actualizar extends AppCompatActivity {
     Button btnActualizar;
     RequestQueue requestQueue;
 
-    private final String URL = "http://192.168.101.34:3000/mascotas/";
+    private final String URL = "http://192.168.18.61:3000/mascotas/";
     private void loadUI(){
         resID = findViewById(R.id.resID);
         edtATipo = findViewById(R.id.edtATipo);
