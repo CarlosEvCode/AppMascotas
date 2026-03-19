@@ -107,10 +107,13 @@ public class ListarCustom extends AppCompatActivity implements MascotaAdapter.On
     @Override
     public void onEditar(int posision, Mascota mascota) {
         //En que registro se puso clic?
-        Intent idEnviado = new Intent(this, Actualizar.class);
-        Toast.makeText(this,"Editar: "+mascota.getId(),Toast.LENGTH_SHORT).show();
-        idEnviado.putExtra("idEnviado", mascota.getId()); //Enviando la id del objeto mascota
-        startActivity(idEnviado);
+        Intent envioDatos = new Intent(this, Actualizar.class);
+        envioDatos.putExtra("idEnviado", mascota.getId()); //Enviando la id del objeto mascota
+        envioDatos.putExtra("tipoEnviado", mascota.getTipo());
+        envioDatos.putExtra("nombreEnviado", mascota.getNombre());
+        envioDatos.putExtra("colorEnviado", mascota.getColor());
+        envioDatos.putExtra("pesoEnviado", mascota.getPesokg());
+        startActivity(envioDatos);
 
     }
 
