@@ -5,9 +5,9 @@ public class Mascota {
     private String tipo;
     private String nombre;
     private String color;
-    private String pesokg;
+    private Double pesokg;
 
-    public Mascota(int id, String tipo, String nombre, String color, String pesokg) {
+    public Mascota(int id, String tipo, String nombre, String color, Double pesokg) {
         this.id = id;
         this.tipo = tipo;
         this.nombre = nombre;
@@ -34,7 +34,7 @@ public class Mascota {
         return color;
     }
 
-    public String getPesokg() {
+    public Double getPesokg() {
         return pesokg;
     }
 }

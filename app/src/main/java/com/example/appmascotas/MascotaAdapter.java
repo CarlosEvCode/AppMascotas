@@ -25,8 +25,8 @@ public class MascotaAdapter extends RecyclerView.Adapter<MascotaAdapter.ViewHold
 
     //Interface
     public interface OnAccionListener{
-        void onEditar(int posision, Mascota mascota);
-        void onEliminar(int posision, Mascota mascota);
+        void onEditar(int position, Mascota mascota);
+        void onEliminar(int position, Mascota mascota);
     }
 
     //Constructor
@@ -58,7 +58,7 @@ public class MascotaAdapter extends RecyclerView.Adapter<MascotaAdapter.ViewHold
     //Inflar = crea el layout para cada fila
     @NonNull
     @Override
-    public MascotaAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.item_mascota, parent, false);
         return new ViewHolder(view);
     }
@@ -71,7 +71,7 @@ public class MascotaAdapter extends RecyclerView.Adapter<MascotaAdapter.ViewHold
         //TextView muestran los datos
         holder.tvNombre.setText(mascota.getNombre());
         holder.tvTipo.setText(mascota.getTipo());
-        holder.tvPeso.setText(mascota.getPesokg());
+        holder.tvPeso.setText(String.valueOf(mascota.getPesokg()));
 
         //Botones
         holder.btnEditar.setOnClickListener(v->{
@@ -85,7 +85,7 @@ public class MascotaAdapter extends RecyclerView.Adapter<MascotaAdapter.ViewHold
 
     @Override
     public int getItemCount() {
-        return 0;
+        return lista.size();
     }
 
     //4. Eliminar un elemento de la lista<Mascota>
