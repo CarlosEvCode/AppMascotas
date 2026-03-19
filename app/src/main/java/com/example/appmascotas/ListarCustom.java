@@ -1,7 +1,9 @@
 package com.example.appmascotas;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -28,9 +30,13 @@ public class ListarCustom extends AppCompatActivity implements MascotaAdapter.On
     MascotaAdapter adapter;
     ArrayList<Mascota> listaMascotas;
     RequestQueue requestQueue;
+    Button btnEditar, btnEliminar;
+
     private final String URL = "http://192.168.101.34:3000/mascotas/";
     private void loadUI(){
         recyclerMascotas = findViewById(R.id.recyclerMascotas);
+        btnEditar = findViewById(R.id.btnEditar);
+        btnEliminar = findViewById(R.id.btnEliminar);
     }
 
     @Override
@@ -44,6 +50,8 @@ public class ListarCustom extends AppCompatActivity implements MascotaAdapter.On
         });
 
         loadUI();
+
+        /*btnEditar.setOnClickListener((v) -> {startActivity(new Intent(getApplicationContext(), Actualizar.class));});*/
 
         //Preparar lista y adapter antes de utilizar WS
         listaMascotas = new ArrayList<>();
@@ -99,7 +107,11 @@ public class ListarCustom extends AppCompatActivity implements MascotaAdapter.On
     @Override
     public void onEditar(int posision, Mascota mascota) {
         //En que registro se puso clic?
+        Intent idEnviado = new Intent(this, Actualizar.class);
         Toast.makeText(this,"Editar: "+mascota.getId(),Toast.LENGTH_SHORT).show();
+        idEnviado.putExtra("idEnviado", mascota.getId()); //Enviando la id del objeto mascota
+        startActivity(idEnviado);
+
     }
 
     @Override
